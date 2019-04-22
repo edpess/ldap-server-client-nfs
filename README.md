@@ -73,7 +73,7 @@ memberUid: jessie
 Entre com o comando:
 
 ```
-# # ldapadd -x -D cn=admin,dc=users,dc=auth -W -f ldapuser.ldif  
+#ldapadd -x -D cn=admin,dc=users,dc=auth -W -f ldapuser.ldif  
 ```
 Será pedida a senha que foi estipulada anteriormente.
 A saída deverá ser:
@@ -182,7 +182,7 @@ Vamos agora configurar os clientes para usar o serviço de autenticação LDAP
 Entre com os comandos de instalação
 
 ```
-apt -y install libnss-ldap libpam-ldap ldap-utils 
+#apt -y install libnss-ldap libpam-ldap ldap-utils 
 ```
 Será pedido o ***LDAP server URI:*** 
 
@@ -269,11 +269,15 @@ Reinicie o sistema e use os usuários cadastrados no servidor LDAP para logar
 
 ***Configurando o Servidor NFS***
 
+NFS (acrônimo para Network File System) é um sistema de arquivos distribuídos desenvolvido inicialmente pela Sun Microsystems, Inc., a fim de compartilhar arquivos e diretórios entre computadores conectados em rede, formando assim um diretório virtual. 
+
 Instalando os programas necessários
 
 ```
 #apt -y install nfs-kernel-server 
 ```
+Rode o shell script ***script_NFSSERVER.sh*** para para criar as pastas e permissões necessárias
+
 
 Após a instalação a configuração do servidor seria editar o arquivo exports localizado em ***/etc/exports** conforme o seguinte exemplo:
 
@@ -286,11 +290,126 @@ Usamos a opção (rw) que permite solicitações de leitura e gravação em um v
 Após o procedimento é necessário reiniciar o serviço, faça da seguinte forma:
 
 ```
-service nfs-kernel-server restart
+#service nfs-kernel-server restart
 ```
 Para se conectar ao servidor podemos usar comandos como o seguinte exemplo:
 
 ```
 sudo mount -t nfs 192.168.0.104:/mnt/arquivos /ArquivosCompartilhados
 ```
+***Instalação do NIS***
 
+O NIS (Network Information Service) é um serviço desenvolvido pela SUN com a finalidade de disseminar informações de uma rede. Informações estas como os grupos de usuários, usuários, hosts e etc.
+
+Procedimento
+
+```
+#apt -y install nis 
+```
+Insira o nome do domínio
+
+```
+ NIS domain: 
+ users.nis
+ ```
+ Configurando como um servidor mestre NIS
+ 
+ Editando o arquivo ***/etc/default/nis ***
+ 
+ Na linha 6 mude o parâmetro que vai indicar o NIS master server
+ 
+ ```
+ NISSERVER=master
+ ```
+ 
+ Edite o arquivo ***/etc/ypserv.securenets*** da seguinte forma:
+ Comente as linhas que seriam para configurar acesso para todos e coloque a configuração desejada para o range que precisa trabalhar
+ 
+ ```
+#0.0.0.0   0.0.0.0
+
+255.255.255.0   192.168.0.0
+ ```
+ 
+ Edite o arquivo ***/var/yp/Makefile *** da seguinte forma:
+ 
+ Na linha 52 altere para:
+ 
+ ```
+ MERGE_PASSWD=true
+ ```
+ 
+ A linha 56 para:
+ 
+ ```
+ MERGE_GROUP=true
+ ```
+ 
+ Agora edite também o arquivo ***/etc/hosts *** adicionando
+ 
+ 192.168.20.9       dlp.users.nis        dlp
+ 
+ Dê o comando para upgrade do database NIS
+ 
+ ```
+ #/usr/lib/yp/ypinit -m
+ ```
+ 
+ Vão ser pedidos os nomes dos hosts para serem cadastrados no serviço
+ 
+ ```
+ next host to add:  dlp.users.nis
+ next host to add:  ldap_server
+ next host to add:  client_01
+ next host to add:  client_02
+ next host to add:  nfs_server
+ ```
+ 
+ A saída do comando:
+ 
+```
+Is this correct? [y/n: y] y
+
+We need a few minutes to build the databases...
+Building /var/yp/srv.world/ypservers...
+Running /var/yp/Makefile...
+make[1]: Entering directory '/var/yp/srv.world'
+Updating passwd.byname...
+Updating passwd.byuid...
+Updating group.byname...
+Updating group.bygid...
+Updating hosts.byname...
+Updating hosts.byaddr...
+Updating rpc.byname...
+Updating rpc.bynumber...
+Updating services.byname...
+Updating services.byservicename...
+Updating netid.byname...
+Updating protocols.bynumber...
+Updating protocols.byname...
+Updating netgroup...
+Updating netgroup.byhost...
+Updating netgroup.byuser...
+Updating shadow.byname... Ignored -> merged with passwd
+make[1]: Leaving directory '/var/yp/users.nis'
+
+dlp.users.nis has been set up as a NIS master server.
+``` 
+
+Reinicie o serviço com o comando:
+
+```
+#systemctl restart nis 
+```
+Se você adicionar usuários no servidor local, aplique-os também ao banco de dados NIS.
+
+```
+#cd /var/yp
+
+#/var/yp# make
+``` 
+ 
+ 
+ 
+ 
+ 
