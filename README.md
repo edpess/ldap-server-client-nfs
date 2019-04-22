@@ -37,9 +37,9 @@ Será pedida a senha que foi estipulada anteriormente.
 A saída deverá ser:
 
 ```
-adding new entry "ou=people,dc=users,dc=aut"
+adding new entry "ou=people,dc=users,dc=auth"
 
-adding new entry "ou=people,dc=users,dc=aut"
+adding new entry "ou=people,dc=users,dc=auth"
 ```
 
 Adicionando contas de usuário
@@ -263,4 +263,31 @@ session optional        pam_mkhomedir.so skel=/etc/skel umask=077
 ```
 
 Reinicie o sistema e use os usuários cadastrados no servidor LDAP para logar
+
+Configurando o Servidor NFS
+
+Instalando os programas necessários
+
+```
+#apt -y install nfs-kernel-server 
+```
+
+Após a instalação a configuração do servidor seria editar o arquivo exports localizado em ***/etc/exports** conforme o seguinte exemplo:
+
+
+```
+/home/user/teste_nfs 192.168.0.104(rw) 
+```
+Usamos a opção (rw) que permite solicitações de leitura e gravação em um volume NFS. Existem inumeras outras possibilidades, porém não fazem parte do escopo pedido.
+
+Após o procedimento é necessário reiniciar o serviço, faça da seguinte forma:
+
+```
+service nfs-kernel-server restart
+```
+Para se conectar ao servidor podemos usar comandos como o seguinte exemplo:
+
+```
+sudo mount -t nfs 192.168.0.104:/mnt/arquivos /ArquivosCompartilhados
+```
 
