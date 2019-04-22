@@ -87,7 +87,7 @@ Adicionando usuários e grupos em passwd / group local ao diretório LDAP.
 
 crie um arquivo chamado ***ldapuser.sh*** e insira os seguintes dados:
 
-```
+```bash
 #Preste atenção aos termos dc=users,dc=auth, pois podem ser substituidos conforme sua preferência
 #!/bin/bash
 
