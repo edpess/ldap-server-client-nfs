@@ -42,7 +42,7 @@ A saída deverá ser:
 ```
 adding new entry "ou=people,dc=users,dc=auth"
 
-adding new entry "ou=people,dc=users,dc=auth"
+adding new entry "ou=people,dc=groups,dc=auth"
 ```
 
 ***Adicionando contas de usuário***
@@ -406,7 +406,7 @@ Se você adicionar usuários no servidor local, aplique-os também ao banco de d
 ```
 #cd /var/yp
 
-#/var/yp# make
+#/var/yp make
 ``` 
  
  
