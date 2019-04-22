@@ -45,7 +45,7 @@ adding new entry "ou=people,dc=users,dc=auth"
 adding new entry "ou=people,dc=users,dc=auth"
 ```
 
-Adicionando contas de usuário
+***Adicionando contas de usuário***
 
 Os grupos, usuários e senhas já deverão existir no sistema, pois serão extraidos neste procedimento
 
@@ -175,7 +175,7 @@ Após entrar com a senha do Admin, a saída do comando deverá ser neste formado
 adding new entry "uid=joao,ou=people,dc=users,dc=auth"
 ```
 
-Configurando Clientes LDAP
+***Configurando Clientes LDAP***
 
 Vamos agora configurar os clientes para usar o serviço de autenticação LDAP
 
@@ -267,7 +267,7 @@ session optional        pam_mkhomedir.so skel=/etc/skel umask=077
 
 Reinicie o sistema e use os usuários cadastrados no servidor LDAP para logar
 
-Configurando o Servidor NFS
+***Configurando o Servidor NFS***
 
 Instalando os programas necessários
 
