@@ -22,7 +22,7 @@ Usando seu editor de preferência crie um arquivo chamado ***base.ldif*** e insi
 Escolha os termos 'dn: ou=people,dc=*** dc=***' conforme preferir
 
 
-```bash
+```
 dn: ou=people,dc=users,dc=auth
 objectClass: organizationalUnit
 ou: people
@@ -51,7 +51,7 @@ Os grupos, usuários e senhas já deverão existir no sistema, pois serão extra
 
 crie um arquivo chamado ***ldapuser.ldif*** e insira os seguintes dados:
 
-```
+```bash
 dn: uid=jessie,ou=people,dc=users,dc=auth
 objectClass: inetOrgPerson
 objectClass: posixAccount
@@ -158,20 +158,20 @@ done
 ```
 Entre com o comando: 
 
-```
-#bash ldapuser.sh 
+```bash
+# bash ldapuser.sh 
 ```
 Os usuários, grupos e senhas serão importados para o arquivo ***ldapuser.ldif*** 
 
 Agora entre com o comando:
 
-```
+```bash
 # ldapadd -x -D cn=admin,dc=users,dc=auth -W -f ldapuser.ldif 
 ```
 
 Após entrar com a senha do Admin, a saída do comando deverá ser neste formado
 
-```
+```bash
 adding new entry "uid=joao,ou=people,dc=users,dc=auth"
 ```
 
@@ -181,7 +181,7 @@ Vamos agora configurar os clientes para usar o serviço de autenticação LDAP
 
 Entre com os comandos de instalação
 
-```
+```bash
 #apt -y install libnss-ldap libpam-ldap ldap-utils 
 ```
 Será pedido o ***LDAP server URI:*** 
