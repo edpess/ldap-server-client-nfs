@@ -13,7 +13,7 @@ Nele nós criamos os servidores NFS e LDAP juntamente com os clientes eo serviç
 
 ***Instalação do servidor LDAP***
 
-```
+```bash
 # aptitude -y install slapd ldap-utils 
 ```
 Insira a senha para o Admin que está sendo instalado
@@ -22,7 +22,7 @@ Usando seu editor de preferência crie um arquivo chamado ***base.ldif*** e insi
 Escolha os termos 'dn: ou=people,dc=*** dc=***' conforme preferir
 
 
-```
+```bash
 dn: ou=people,dc=users,dc=auth
 objectClass: organizationalUnit
 ou: people
@@ -33,7 +33,7 @@ ou: groups
 ```
 Em seguida entre com o comando:
 
-```
+```bash
 # ldapadd -x -D cn=admin,dc=users,dc=auth -W -f base.ldif 
 ```
 Será pedida a senha que foi estipulada anteriormente.
@@ -72,13 +72,13 @@ memberUid: jessie
 ```
 Entre com o comando:
 
-```
+```bash
 #ldapadd -x -D cn=admin,dc=users,dc=auth -W -f ldapuser.ldif  
 ```
 Será pedida a senha que foi estipulada anteriormente.
 A saída deverá ser:
 
-```
+```bash
 adding new entry "uid=jessie,ou=people,dc=users,dc=auth"
 
 adding new entry "cn=jessie,ou=groups,dc=users,dc=auth"
@@ -205,13 +205,13 @@ Especifique a versão do LDAP que deseja, no caso usamos o ***3***
 ```
 Especifique o sufixo para a conta de administrador do LDAP
 
-```
+```bash
 LDAP account for root:
 cn=admin,dc=users,dc=auth
 ```
 
 Defina a senha para a conta de administrador do LDAP
-```
+```bash
 LDAP root account password:                                             
                                                                         
 ********
@@ -224,7 +224,7 @@ Na opção seguinte será perguntado se o banco de dados LDAP requer login, esco
 
 
 Especifique o sufixo da conta de administrador do LDAP e continue com o OK
-```
+```bash
 LDAP administrative account:                                             
                                                                            
 cn=admin,dc=srv,dc=world_
@@ -232,10 +232,8 @@ cn=admin,dc=srv,dc=world_
 ```
 Especifique senha para a conta de administrador do LDAP
 
-```
-
-LDAP administrative password:                                             
-                                                                            
+```bash
+LDAP administrative password:                                                                                                                 
 ********
 ```
 
@@ -245,7 +243,7 @@ O primeiro dele será o ***/etc/nsswitch.conf ***
 Na linha 7, adicione ***ldap*** 
 O arquivo deve ficar dessa forma:
 
-```
+```bash
 passwd:compat ldap
 group:compat ldap
 shadow:compat ldap
@@ -255,13 +253,13 @@ O próximo arquivo a ser editado será o ***/etc/pam.d/common-password ***
 
 Na linha 26 retire a parte ( remove 'use_authtok' ), deverá ficar assim
 
-```
+```bash
 password     [success=1 user_unknown=ignore default=die]     pam_ldap.so try_first_pass
 ```
 
 Devemos alterar também o arquivo ***/etc/pam.d/common-session *** adicionando no final do arquivo os seguintes comandos
 
-```
+```bash
 session optional        pam_mkhomedir.so skel=/etc/skel umask=077
 ```
 
@@ -308,7 +306,7 @@ Procedimento
 ```
 Insira o nome do domínio
 
-```
+```bash
  NIS domain: 
  users.nis
  ```
@@ -325,7 +323,7 @@ Insira o nome do domínio
  Edite o arquivo ***/etc/ypserv.securenets*** da seguinte forma:
  Comente as linhas que seriam para configurar acesso para todos e coloque a configuração desejada para o range que precisa trabalhar
  
- ```
+ ```bash
 #0.0.0.0   0.0.0.0
 
 255.255.255.0   192.168.0.0
@@ -357,7 +355,7 @@ Insira o nome do domínio
  
  Vão ser pedidos os nomes dos hosts para serem cadastrados no serviço
  
- ```
+ ```bash
  next host to add:  dlp.users.nis
  next host to add:  ldap_server
  next host to add:  client_01
@@ -367,7 +365,7 @@ Insira o nome do domínio
  
  A saída do comando:
  
-```
+```bash
 Is this correct? [y/n: y] y
 
 We need a few minutes to build the databases...
