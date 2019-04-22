@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#Criando pastas...
+sudo mkdir /var/tmp/ArquivosCompartilhados
+sudo mkdir /var/tmp/ArquivosCompartilhados/arquivos
+sudo mkdir /var/tmp/ArquivosCompartilhados/arquivos/cordenacao
+sudo mkdir /var/tmp/ArquivosCompartilhados/arquivos/estagiario
+sudo mkdir /var/tmp/ArquivosCompartilhados/arquivos/secretaria
+
+#Alteração dos grupos
+
+sudo chgrp cordenacao /var/tmp/ArquivosCompartilhados/arquivos/cordenacao
+sudo chgrp estagiario /var/tmp/ArquivosCompartilhados/arquivos/estagiario
+sudo chgrp secretaria /var/tmp/ArquivosCompartilhados/arquivos/secretaria
+
+
