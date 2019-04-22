@@ -58,7 +58,7 @@ objectClass: posixAccount
 objectClass: shadowAccount
 cn: Jessie
 sn: Debian
-userPassword: {SSHA}xxxxxxxxxxxxxxxxx
+userPassword: {crypt}FDBu190.2vfwo
 loginShell: /bin/bash
 uidNumber: 1000
 gidNumber: 1000
