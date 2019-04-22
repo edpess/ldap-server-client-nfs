@@ -7,7 +7,7 @@ ambientes de desenvolvimento de software virtual portáteis, por exemplo, para o
 KVM, Hyper-V, contêineres do Docker, VMware e AWS
 
 O arquivo Vagrantfile desenvolvido neste trabalho é usado como parâmetro de configurações para o Vagrant.
-Nele nós criamos os servidores NFS e LDAP juntamente com os clientes
+Nele nós criamos os servidores NFS e LDAP juntamente com os clientes eo serviço NIS
 
 
 
