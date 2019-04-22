@@ -1,0 +1,20 @@
+#!/bin/bash
+
+linkpath="$HOME/ArquivosCompartilhados"
+mntpath="/mnt/arquivos"
+
+# Se não encontrar o ponto de montagem, monte-o
+if [ ! -d $mntpath  ]; then
+
+   sudo mount -t nfs 192.168.100.104:/var/tmp/ArquivosCompartilhados /mnt/
+
+      # Caso  nao entre no if, significa que mount falhou
+      if [ -d $mntpath  ]; then
+
+	  #Verifica se já existe um link, caso não exista, cria um
+	  if [ ! -h $linkpath  ]; then
+		ln -s $mntpath $linkpath
+	  fi
+
+      fi
+fi
