@@ -235,3 +235,32 @@ LDAP administrative password:
                                                                             
 ********
 ```
+
+Daqui em diante teremos que editar alguns arquivos
+O primeiro dele será o ***/etc/nsswitch.conf ***
+
+Na linha 7, adicione ***ldap*** 
+O arquivo deve ficar dessa forma:
+
+```
+passwd:compat ldap
+group:compat ldap
+shadow:compat ldap
+```
+
+O próximo arquivo a ser editado será o ***/etc/pam.d/common-password ***
+
+Na linha 26 retire a parte ( remove 'use_authtok' ), deverá ficar assim
+
+```
+password     [success=1 user_unknown=ignore default=die]     pam_ldap.so try_first_pass
+```
+
+Devemos alterar também o arquivo ***/etc/pam.d/common-session *** adicionando no final do arquivo os seguintes comandos
+
+```
+session optional        pam_mkhomedir.so skel=/etc/skel umask=077
+```
+
+Reinicie o sistema e use os usuários cadastrados no servidor LDAP para logar
+
