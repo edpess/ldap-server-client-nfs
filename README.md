@@ -328,19 +328,20 @@ Insira o nome do domínio
 
 255.255.255.0   192.168.0.0
  ```
+***Observação:***
+Muitos tutoriais colocam esses passos como a configuração básica para o NIS setando como TRUE, porém nesse caso ***não é necessário***, pois isso habilitaria a autenticação pelo NIS e em caso de mudança de senha aconteceriam problemas.
  
  Edite o arquivo ***/var/yp/Makefile *** da seguinte forma:
  
  Na linha 52 altere para:
  
  ```
- MERGE_PASSWD=true
+ MERGE_PASSWD=FALSE
  ```
- 
- A linha 56 para:
+  A linha 56 para:
  
  ```
- MERGE_GROUP=true
+ MERGE_GROUP=FALSE
  ```
  
  Agora edite também o arquivo ***/etc/hosts *** adicionando
